@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -23,14 +22,6 @@ public class Emprestimo {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	private Date dataPrimeiraParcela;
 	private int numeroParcela;
-	private BigDecimal valorParcela;
-	private Status status;
-	
-	@DBRef
 	private Cliente cliente;
 	
-	public Emprestimo() {
-		
-	}
-
 }

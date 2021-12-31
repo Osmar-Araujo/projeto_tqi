@@ -3,10 +3,12 @@ package com.tqi.evolution.repository;
 import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 
-import com.tqi.evolution.model.Cliente;
 import com.tqi.evolution.model.Emprestimo;
 
 public interface EmprestimoRepository extends MongoRepository<Emprestimo, String> {
-	List<Emprestimo>findByCliente(Cliente cliente);
+	
+	@Query("{'Cliente.idCliente':?0}")
+	List<Emprestimo> obterPorIdCliente(String idCliente);
 }

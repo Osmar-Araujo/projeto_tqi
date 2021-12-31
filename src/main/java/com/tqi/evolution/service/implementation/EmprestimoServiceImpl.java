@@ -25,19 +25,26 @@ public class EmprestimoServiceImpl implements EmprestimoService {
 		return this.repository.findAll();
 	}
 
-	@Override
-	public Emprestimo obterPorCodigo(String codigo) {
-		return this.repository.findById(codigo).orElseThrow(() -> new IllegalArgumentException("Emprestimo inexistente!!"));
-	}
 
-	@Override
-	public Emprestimo criar(Emprestimo emprestimo) {
-		
+	public String criar(Emprestimo emprestimo) {
 		Cliente cliente = this.cliRepository.
 				findById(emprestimo.getCliente().getIdCliente()).
 				orElseThrow(() -> new IllegalArgumentException("Cliente inexistente!!"));
 		emprestimo.setCliente(cliente);
-		return this.repository.save(emprestimo);
+		this.repository.save(emprestimo);
+		return "Emprestimo solicitado com sucesso!!" + emprestimo;
+	}
+
+
+	@Override
+	public Emprestimo obterPorCodigo(String idEmprestimo) {
+		return repository.findById(idEmprestimo).orElseThrow(() -> new IllegalArgumentException("Emprestimo inexistente!!"));
+	}
+
+
+	@Override
+	public List<Emprestimo> obterPorIdCliente(String idCliente) {
+		return this.repository.obterPorIdCliente(idCliente);
 	}
 
 }

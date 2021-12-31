@@ -5,5 +5,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import com.tqi.evolution.model.Cliente;
 
 public interface ClienteRepository extends MongoRepository<Cliente, String>{
+	
+	public Cliente findByEmail(String email);
 
 }
