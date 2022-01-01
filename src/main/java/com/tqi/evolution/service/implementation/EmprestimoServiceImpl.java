@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tqi.evolution.errors.IllegalArgument;
+import com.tqi.evolution.errors.ResourceNotFoundException;
 import com.tqi.evolution.model.Cliente;
 import com.tqi.evolution.model.Emprestimo;
 import com.tqi.evolution.repository.ClienteRepository;
@@ -30,17 +32,18 @@ public class EmprestimoServiceImpl implements EmprestimoService {
 	public String criar(Emprestimo emprestimo) {
 		Cliente cliente = this.cliRepository.
 				findById(emprestimo.getCliente().getIdCliente()).
-				orElseThrow(() -> new IllegalArgumentException("Cliente inexistente!!"));
+				orElseThrow(() -> new ResourceNotFoundException("Cliente inexistente!!"));
 		emprestimo.setCliente(cliente);
+		
 		if(emprestimo.getNumeroParcela() > 60) {
-			throw new IllegalArgumentException("O número de parcelas não deve ultrapassar 60!!");
+			throw new IllegalArgument("O número de parcelas não deve ultrapassar 60!!");
 		}
 		
 		LocalDate dataAtual = LocalDate.now();
 		LocalDate maisTresMeses = dataAtual.plusMonths(3);
 		
 		if(emprestimo.getDataPrimeiraParcela().isAfter(maisTresMeses) || emprestimo.getDataPrimeiraParcela().isBefore(dataAtual)) {
-			throw new IllegalArgumentException("A data da primeira paracela não pode ultrapassar 90 dias, nem pode ser retroativa!!");
+			throw new IllegalArgument("A data da primeira paracela não pode ultrapassar 90 dias, nem pode ser retroativa!!");
 		}
 		
 		this.repository.save(emprestimo);
@@ -50,7 +53,7 @@ public class EmprestimoServiceImpl implements EmprestimoService {
 
 	@Override
 	public Emprestimo obterPorCodigo(String idEmprestimo) {
-		return repository.findById(idEmprestimo).orElseThrow(() -> new IllegalArgumentException("Emprestimo inexistente!!"));
+		return repository.findById(idEmprestimo).orElseThrow(() -> new IllegalArgument("Emprestimo inexistente!!"));
 	}
 
 

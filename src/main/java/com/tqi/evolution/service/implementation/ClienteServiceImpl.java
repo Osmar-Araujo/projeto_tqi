@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tqi.evolution.errors.IllegalArgument;
 import com.tqi.evolution.model.Cliente;
 import com.tqi.evolution.model.dto.UsuarioDto;
 import com.tqi.evolution.repository.ClienteRepository;
@@ -19,7 +20,8 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Override
 	public Cliente obterUsuario(String codigo) {
-		return this.repository.findById(codigo).orElseThrow(() -> new IllegalArgumentException("Usuario inexistente!!"));
+		return this.repository.findById(codigo)
+				   .orElseThrow(() -> new IllegalArgument("Usuario inexistente!!"));
 	}
 
 	@Override

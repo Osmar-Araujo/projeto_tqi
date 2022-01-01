@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,8 +35,8 @@ public class EmprestimoController {
 	@GetMapping("lista/{idCliente}")
 	public List<EmprestimoListarDto> obterPorIdClienteSimplificado(@PathVariable String idCliente){
 		return this.service.obterPorIdCliente(idCliente)
-				   .stream()
-				   .map(this::toEmprestimoListarDto).collect(Collectors.toList());
+				   .stream().map(this::toEmprestimoListarDto)
+				   .collect(Collectors.toList());
 	}
 	
 	@GetMapping("detalhado/{idEmprestimo}")
@@ -45,8 +47,8 @@ public class EmprestimoController {
 	
 	
 	@PostMapping
-	public String criarEmprestimo(@RequestBody Emprestimo emprestimo) {
-		return this.service.criar(emprestimo);
+	public ResponseEntity<?> criarEmprestimo(@RequestBody Emprestimo emprestimo) {
+		return new ResponseEntity<> (this.service.criar(emprestimo),HttpStatus.CREATED);
 	}
 	
 	private EmprestimoListarDto toEmprestimoListarDto(Emprestimo emprestimo) {

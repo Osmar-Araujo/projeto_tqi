@@ -3,6 +3,8 @@ package com.tqi.evolution.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,9 +36,9 @@ public class ClienteController {
 	}
 
 	@PostMapping
-	public Cliente criarCliente(@RequestBody Cliente cliente) {
+	public ResponseEntity<?> criarCliente(@RequestBody Cliente cliente) {
 		cliente.setSenha(new BCryptPasswordEncoder().encode(cliente.getSenha()));
-		return this.service.criarCliente(cliente);
+		return new ResponseEntity <>(this.service.criarCliente(cliente),HttpStatus.CREATED);
 	}
 	
 	public UsuarioDto toUsuarioDto(Cliente cliente) {

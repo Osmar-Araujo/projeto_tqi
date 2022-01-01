@@ -19,8 +19,6 @@ public class ImplementUserDetailService implements UserDetailsService{
 	public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
 		UsuarioDto usuarioDto = impl.obterUsuarioDto(userEmail);
 		
-		System.out.println(usuarioDto);
-		
 		if(usuarioDto == null) {
 			throw new IllegalArgumentException("Usuário não encontrado!!");
 		}
