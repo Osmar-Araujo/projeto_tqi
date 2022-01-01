@@ -1,7 +1,7 @@
 package com.tqi.evolution.model;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -20,7 +20,7 @@ public class Emprestimo {
 	private BigDecimal valorEmprestimo;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-	private Date dataPrimeiraParcela;
+	private LocalDate dataPrimeiraParcela;
 	private int numeroParcela;
 	private Cliente cliente;
 	

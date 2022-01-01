@@ -1,7 +1,7 @@
 package com.tqi.evolution.model.dto;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -14,7 +14,7 @@ public class EmprestimoDetalhadoDto {
 	private int qtdParcelas;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-	private Date dataPrimeiraParcela;
+	private LocalDate dataPrimeiraParcela;
 	private String emailCliente;
 	private BigDecimal rendaCliente;
 

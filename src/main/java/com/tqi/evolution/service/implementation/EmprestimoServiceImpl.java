@@ -1,5 +1,6 @@
 package com.tqi.evolution.service.implementation;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,17 @@ public class EmprestimoServiceImpl implements EmprestimoService {
 				findById(emprestimo.getCliente().getIdCliente()).
 				orElseThrow(() -> new IllegalArgumentException("Cliente inexistente!!"));
 		emprestimo.setCliente(cliente);
+		if(emprestimo.getNumeroParcela() > 60) {
+			throw new IllegalArgumentException("O número de parcelas não deve ultrapassar 60!!");
+		}
+		
+		LocalDate dataAtual = LocalDate.now();
+		LocalDate maisTresMeses = dataAtual.plusMonths(3);
+		
+		if(emprestimo.getDataPrimeiraParcela().isAfter(maisTresMeses) || emprestimo.getDataPrimeiraParcela().isBefore(dataAtual)) {
+			throw new IllegalArgumentException("A data da primeira paracela não pode ultrapassar 90 dias, nem pode ser retroativa!!");
+		}
+		
 		this.repository.save(emprestimo);
 		return "Emprestimo solicitado com sucesso!!" + emprestimo;
 	}
